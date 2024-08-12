@@ -2,8 +2,6 @@
 # realestate-new-v
 =======
 
-# nextjs-airbnb-clone
-
 # App Screenshots
 
 ## Home Page List View
