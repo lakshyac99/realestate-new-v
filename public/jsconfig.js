@@ -1,8 +1,8 @@
 {
-    "compilerOptions" ;{
-        "baseUrl"; ".",
-        "paths"; {
-            "airbnb/"; ["./src"]
+    "compilerOptions" :{
+        "baseUrl": ".",
+        "paths": {
+            "airbnb/": ["./src"]
         }
     }
 }
