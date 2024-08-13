@@ -5,10 +5,14 @@ import { UserServiceBase } from "./base/user.service.base";
 
 @Injectable()
 export class UserService extends UserServiceBase {
+  findOne: any;
+  create: any;
   constructor(
     protected readonly prisma: PrismaService,
     protected readonly passwordService: PasswordService
   ) {
     super(prisma, passwordService);
   }
+
+  
 }
