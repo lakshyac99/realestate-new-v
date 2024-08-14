@@ -38,7 +38,8 @@ export const signup = async (username, password, firstName, lastName) => {
 export const checkUser = async (email) => {
     const result = await post (createUrl("/api/check-user"), {email}).catch(
         () => null
-    )?.data;
+    );
+    // console.log(result)
     if (!result) return false;
 
     return true;

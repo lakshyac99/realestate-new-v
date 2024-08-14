@@ -1,15 +1,13 @@
 "use client";
 import React, { useState } from "react";
 
-import { IoMdClose } from "react-icons/io"
+import { IoMdClose } from "react-icons/io";
 import FormInput from "../common/FormInput";
 import { useAppStore } from "../../store/store";
-import { checkUser } from "../../lib/auth";
+import { checkUser, signup, login } from "../../lib/auth";
 
 const AuthModal = () => {
-
-  const { setAuthModal } = useAppStore();
-
+  const { setAuthModal, setIsLoggedIn, setUserInfo } = useAppStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,15 +19,25 @@ const AuthModal = () => {
     const data = await checkUser(email);
     if (!data) setuserFound(false);
     else setuserFound(true);
-  }
+  };
 
   const handleLogin = async () => {
-
-  }
+    if (email && password) {
+      const data = await login(email, password);
+      setAuthModal();
+      setUserInfo(data);
+      setIsLoggedIn(true);
+    }
+  };
 
   const handleSignup = async () => {
-
-  }
+    if (email && password && firstName && lastName) {
+      const data = await signup(email, password, firstName, lastName);
+      setAuthModal();
+      setUserInfo(data);
+      setIsLoggedIn(true);
+    }
+  };
 
   return (
     <div className="relative z-50">
@@ -39,38 +47,39 @@ const AuthModal = () => {
             <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="bg-white pb-4 pt-5">
                 <div className="border-b border-b-gray-200 flex items-center justify-center relative pb-5">
-                  <span className="absolute left-5 cursor-pointer text-lg" onClick={() => setAuthModal()}>
+                  <span
+                    className="absolute left-5 cursor-pointer text-lg"
+                    onClick={() => setAuthModal()}
+                  >
                     <IoMdClose />
                   </span>
-                  {
-                    userFound === null ?
-                      <span>Login or Signup</span> :
-                      <span>
-                        {userFound === true ? "Log in" : "Sign up"} {email}
-                      </span>
-                  }
+                  {userFound === null ? (
+                    <span>Login or Signup</span>
+                  ) : (
+                    <span>
+                      {userFound === true ? "Log in" : "Sign up"} {email}
+                    </span>
+                  )}
                 </div>
                 <div className="p-5">
                   <h3 className="text-xl pb-5">Welcome to AirBnb</h3>
-                  {
-                    userFound === null && (
-                      <FormInput
-                        name="email"
-                        placeholder="Email"
-                        value={email}
-                        setValue={setEmail}
-                      />
-                    )}
-                  {
-                    userFound === true && (
-                      <FormInput
-                        name="password"
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        setValue={setPassword}
-                      />
-                    )}
+                  {userFound === null && (
+                    <FormInput
+                      name="email"
+                      placeholder="Email"
+                      value={email}
+                      setValue={setEmail}
+                    />
+                  )}
+                  {userFound === true && (
+                    <FormInput
+                      name="password"
+                      placeholder="Password"
+                      type="password"
+                      value={password}
+                      setValue={setPassword}
+                    />
+                  )}
                   {userFound === false && (
                     <div className="flex gap-3 flex-col">
                       <FormInput
@@ -96,7 +105,8 @@ const AuthModal = () => {
                       />
                     </div>
                   )}
-                  <button className="bg-airbnb-theme-color py-3 mt-5 w-full text-white text-lg font-medium rounded-md"
+                  <button
+                    className="bg-airbnb-theme-color py-3 mt-5 w-full text-white text-lg font-medium rounded-md"
                     onClick={
                       userFound === null
                         ? verifyEmail
@@ -104,8 +114,9 @@ const AuthModal = () => {
                         ? handleLogin
                         : handleSignup
                     }
-
-                  >Continue</button>
+                  >
+                    Continue
+                  </button>
                 </div>
               </div>
             </div>
