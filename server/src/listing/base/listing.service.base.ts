@@ -27,6 +27,7 @@ export class ListingServiceBase {
   }
 
   async listings(args: Prisma.ListingFindManyArgs): Promise<PrismaListing[]> {
+    console.log("Args: ", args);
     return this.prisma.listing.findMany(args);
   }
   async listing(
