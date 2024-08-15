@@ -4,7 +4,7 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "lakshyac",
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN:
-      "pk.eyJ1Ijoia29vbGtpc2hhbiIsImEioiJjbGw1MD12c3IwYXBiM2Rta2Z4dG14aDYyIn0.YLk5OfpWc7AyRwc9OM5A3w",
+      "pk.eyJ1IjoiaXJmYW5pcnNoYWQiLCJhIjoiY2x6djhpaHBsMDQyMDJpc2R0eTN2ZTJieiJ9.4p7gJP1b3lymNQpM3uyjFA",
   },
   images: {
     domains: ["res.cloudinary.com"],

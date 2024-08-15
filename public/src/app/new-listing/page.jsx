@@ -30,10 +30,10 @@ const page = () => {
         return <ListingTypeSelector />;
       case 3:
         return <ListingPlaceType />;
-      // case 4:
-        // return <PlaceLocation />;
-      // case 5:
-      //   return <PlaceDetails />;
+      case 4:
+        return <PlaceLocation />;
+      case 5:
+        return <PlaceDetails />;
       case 6:
         return <FloorPlan />;
       case 7:

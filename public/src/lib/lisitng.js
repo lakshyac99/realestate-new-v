@@ -1,4 +1,4 @@
-import qs from "querystring";
+import qs from "qs";
 import { createUrl, post } from "./http";
 import axios from "axios";
 
@@ -17,6 +17,19 @@ export const createListingAPI = async (listingData) => {
 export const getAllListingsAPI = async () => {
   const result = await axios.get(createUrl(`/api/listings`));
 
+  if (!result) {
+    alert("Could not get all listings.");
+    return [];
+  }
+  return result.data;
+};
+
+export const getUserListings = async (userId) => {
+  const query = qs.stringify({
+    where: { listingCreatedBy: { id: userId } },
+  });
+
+  const result = await axios.get(createUrl(`/api/listings?${query}`));
   if (!result) {
     alert("Could not get all listings.");
     return [];

@@ -6,9 +6,11 @@ import { FiGlobe } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import ContextMenu from "../common/ContextMenu";
 import { useAppStore } from "../../store/store";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const { setAuthModal, userInfo, setUserInfo } = useAppStore();
+  const router = useRouter();
 
   const [isContextMenuVisible, setIsContextMenuVisible] = useState(false);
 
@@ -57,18 +59,21 @@ const Navbar = () => {
     {
       name: "Trips",
       callBack: () => {
+        router.push("/trips");
         setIsContextMenuVisible(false);
       },
     },
     {
       name: "Whishlists",
       callBack: () => {
+        router.push("/wishlist");
         setIsContextMenuVisible(false);
       },
     },
     {
       name: "Manage Listings",
       callBack: () => {
+        router.push("/my-listings");
         setIsContextMenuVisible(false);
       },
     },
@@ -98,9 +103,14 @@ const Navbar = () => {
         </div>
         <div className="flex-grow basis-0">
           <ul className="flex items-center justify-end gap-6 font-medium">
-            <li className="cursor-pointer">
-              <span>Airbnb your home</span>
-            </li>
+            {userInfo && (
+              <li
+                className="cursor-pointer"
+                onClick={() => router.push("/new-listing")}
+              >
+                <span>Airbnb your home</span>
+              </li>
+            )}
             <li className="cursor-pointer">
               <FiGlobe />
             </li>
