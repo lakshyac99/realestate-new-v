@@ -33,13 +33,16 @@ import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
 import { Wishlist } from "../../wishlist/base/Wishlist";
 import { WishlistWhereUniqueInput } from "../../wishlist/base/WishlistWhereUniqueInput";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class ListingControllerBase {
   constructor(
     protected readonly service: ListingService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
+  @swagger.ApiBearerAuth()
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Listing })
@@ -87,15 +90,15 @@ export class ListingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  // @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Listing] })
   @ApiNestedQuery(ListingFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Listing",
-    action: "read",
-    possession: "any",
-  })
+  // @nestAccessControl.UseRoles({
+  //   resource: "Listing",
+  //   action: "read",
+  //   possession: "any",
+  // })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -128,15 +131,15 @@ export class ListingControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  // @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Listing })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Listing",
-    action: "read",
-    possession: "own",
-  })
+  // @nestAccessControl.UseRoles({
+  //   resource: "Listing",
+  //   action: "read",
+  //   possession: "own",
+  // })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -175,7 +178,11 @@ export class ListingControllerBase {
     }
     return result;
   }
-
+  @swagger.ApiBearerAuth()
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Listing })
@@ -234,7 +241,11 @@ export class ListingControllerBase {
       throw error;
     }
   }
-
+  @swagger.ApiBearerAuth()
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Listing })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -284,15 +295,19 @@ export class ListingControllerBase {
       throw error;
     }
   }
-
+  // @swagger.ApiBearerAuth()
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/trips")
   @ApiNestedQuery(TripFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "read",
-    possession: "any",
-  })
+  // @nestAccessControl.UseRoles({
+  //   resource: "Trip",
+  //   action: "read",
+  //   possession: "any",
+  // })
   async findTrips(
     @common.Req() request: Request,
     @common.Param() params: ListingWhereUniqueInput
@@ -350,6 +365,11 @@ export class ListingControllerBase {
     });
   }
 
+  @swagger.ApiBearerAuth()
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
   @common.Patch("/:id/trips")
   @nestAccessControl.UseRoles({
     resource: "Listing",
