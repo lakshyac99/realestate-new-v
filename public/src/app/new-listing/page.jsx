@@ -10,6 +10,12 @@ import PlaceDetails from "../../components/process/PlaceDetails";
 import FloorPlan from "../../components/process/FloorPlan";
 import StepTowStarter from "../../components/process/StepTwoStarter";
 import ProcessAmeneties from "../../components/process/ProcessAmeneties";
+import Photos from "../../components/process/Photos";
+import Title from "../../components/process/Title";
+import Description from "../../components/process/Description";
+import StepThreeStarter from "../../components/process/StepThreeStarter";
+import Price from "../../components/process/Price";
+import ListingCreated from "../../components/process/ListingCreated";
 
 const page = () => {
   const [step, setStep] = useState(0);
@@ -24,16 +30,30 @@ const page = () => {
         return <ListingTypeSelector />;
       case 3:
         return <ListingPlaceType />;
-      case 4:
-        return <PlaceLocation />;
-      case 5:
-        return <PlaceDetails />;
+      // case 4:
+        // return <PlaceLocation />;
+      // case 5:
+      //   return <PlaceDetails />;
       case 6:
         return <FloorPlan />;
       case 7:
         return <StepTowStarter />;
       case 8:
         return <ProcessAmeneties />;
+      case 9:
+        return <Photos />;
+      case 10:
+        return <Title />;
+      case 11:
+        return <Description />;
+      case 12:
+        return <StepThreeStarter />;
+      case 13:
+        return <Price />;
+      case 14:
+        return <ListingCreated />;
+      default:
+        return <></>;
     }
   };
 

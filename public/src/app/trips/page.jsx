@@ -1,7 +1,8 @@
 import React from "react";
+import Spinner from "../../components/common/Spinner";
 
-const page = () => {
-  return <div>page</div>;
+const loading = () => {
+  return <Spinner />;
 };
 
-export default page;
+export default loading;

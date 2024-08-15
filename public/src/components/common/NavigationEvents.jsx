@@ -1,7 +1,22 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { useAppStore } from "../../store/store";
+import { me } from "../../lib/auth";
 
 const NavigationEvents = () => {
-  return <div>NavigationEvents</div>;
+  const { userInfo, setUserInfo } = useAppStore();
+
+  useEffect(() => {
+    if (!userInfo) {
+      const getData = async () => {
+        const data = await me();
+        setUserInfo(data);
+      };
+      getData();
+    }
+  }, [userInfo]);
+
+  return null;
 };
 
 export default NavigationEvents;
