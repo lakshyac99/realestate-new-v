@@ -5,27 +5,30 @@ import ListView from "../components/views/ListView";
 import MapView from "../components/views/MapView";
 import ViewSwitchBadge from "../components/views/ViewSwitchBadge";
 import { listingTypes } from "../data/listingTypes";
-import { getAllListingsAPI } from "../lib/lisitng";
+import { getAllListingsAPI, getUserWishlists } from "../lib/lisitng";
 import { useAppStore } from "../store/store";
 import React, { useEffect } from "react";
 const Navbar = dynamic(() => import("../components/navbar/Navbar"), {
   ssr: false,
 });
 
-
-// import Navbar from "../components/navbar/Navbar";
 import dynamic from "next/dynamic";
 
 const page = () => {
-  const { isAuthModalOpen, setListings, isMapView } = useAppStore();
+  const { isAuthModalOpen, setListings, isMapView, userInfo, setWishLists } =
+    useAppStore();
 
   useEffect(() => {
     const getData = async () => {
+      // console.log({ setWishLists });
       const data = await getAllListingsAPI();
       setListings(data);
+      const wishlists = await getUserWishlists(userInfo?.id);
+      const wishListsId = wishlists?.map(({ listing }) => listing.id);
+      setWishLists(wishListsId);
     };
     getData();
-  }, []);
+  }, [setListings, setWishLists]);
 
   return (
     <div className="max-h-[100vh] h-[100vh]">

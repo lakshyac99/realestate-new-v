@@ -80,7 +80,6 @@ export class WishlistControllerBase {
       },
     });
   }
-
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Wishlist] })
@@ -104,6 +103,9 @@ export class WishlistControllerBase {
         listing: {
           select: {
             id: true,
+            price: true,
+            title: true,
+            photos: true,
           },
         },
 

@@ -156,6 +156,8 @@ export class ListingControllerBase {
         listingCreatedBy: {
           select: {
             id: true,
+            firstName: true,
+            lastName: true,
           },
         },
 

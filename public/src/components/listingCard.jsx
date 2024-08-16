@@ -49,7 +49,10 @@ const ListingCard = ({
   };
 
   return (
-    <div className="flex items-center justify-center gap-1 flex-col">
+    <div
+      className="flex items-center justify-center gap-1 flex-col"
+      onClick={() => router.push(`/listing/${data.id}`)}
+    >
       <div className="flex items-center justify-center cursor-pointer w-full">
         <div className="flex flex-col gap-2">
           <div className="relative w-64 h-56">
@@ -81,6 +84,7 @@ const ListingCard = ({
           </div>
           <div>
             <h3>{data.title}</h3>
+            <span>${data.price}</span>
           </div>
         </div>
       </div>
@@ -88,6 +92,14 @@ const ListingCard = ({
         <button
           className="bg-airbnb-gradient py-3 mt-5 px-5 text-white text-base font-medium rounded-md cursor-pointer w-80"
           onClick={deleteListing}
+        >
+          Delete
+        </button>
+      )}
+      {isWishList && (
+        <button
+          className="bg-airbnb-gradient py-3 px-3 text-white text-base font-medium rounded-md cursor-pointer w-80"
+          onClick={deleteWishlist}
         >
           Delete
         </button>
