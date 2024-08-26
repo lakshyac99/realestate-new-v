@@ -28,15 +28,18 @@ const ListingCard = ({
   const router = useRouter();
 
   const deleteListing = async () => {
-    const response = await deleteListingAPI(data.id);
-    if (response) {
-      removeUserListing(data.id);
-    }
+    await deleteListingAPI(data?.id);
+    removeUserListing(data.id);
   };
 
   const addWishList = async () => {
     await addToWishlists(data.id, userInfo?.id);
     addToWishList(data.id);
+  };
+
+  const removeWishlist = async () => {
+    // const id = wishLists.find((list) => console.log(list));
+    // await removeFromWishListAPI(id.id);
   };
 
   const deleteWishlist = async () => {
@@ -56,14 +59,14 @@ const ListingCard = ({
       <div className="flex items-center justify-center cursor-pointer w-full">
         <div className="flex flex-col gap-2">
           <div className="relative w-64 h-56">
-            {data?.photos?.length && (
-              <Image
-                src={data?.photos[0]}
-                fill
-                alt="listing"
-                className="rounded-lg object-cover"
-              />
-            )}
+            {/* {data?.photos?.length && ( */}
+            <Image
+              src={data?.photos[0]}
+              fill
+              alt="listing"
+              className="rounded-lg object-cover"
+            />
+            {/* )} */}
             {pathname === "/" && userInfo && (
               <div className="absolute z-20 right-2 top-2">
                 <IoMdHeart
@@ -76,7 +79,9 @@ const ListingCard = ({
                   onClick={(e) => {
                     e.stopPropagation();
 
-                    if (!wishlists?.includes(data.id)) addWishList();
+                    if (wishlists?.includes(data.id)) {
+                      removeWishlist();
+                    } else addWishList();
                   }}
                 />
               </div>
@@ -84,7 +89,7 @@ const ListingCard = ({
           </div>
           <div>
             <h3>{data.title}</h3>
-            <span>${data.price}</span>
+            <span>${data.price} night</span>
           </div>
         </div>
       </div>

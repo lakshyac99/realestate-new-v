@@ -91,7 +91,9 @@ export default function TripScheduler() {
                   type="number"
                   className="text-sm px-1 py-1 border-none outline-none"
                   value={guests}
+                  // onChange={(e) => setGuests(e.target.value)}
                   onChange={(e) => setGuests(e.target.value)}
+                  // onChange={(e) => setGuests(Number(e.target.value))}
                 />
               </div>
             </div>

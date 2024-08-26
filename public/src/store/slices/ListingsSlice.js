@@ -1,13 +1,17 @@
 export const createListingSlice = (set, get) => ({
-  listings: [],
-  isMapView: false,
-  userListings: [],
   wishlists: [],
+  setWishLists: (wishlists) => set({ wishlists }),
   wishListsPage: [],
+  setWishListsPage: (wishListsPage) => set({ wishListsPage }),
+  addToWishList: (id) => {
+    const lists = get().wishlists;
+    lists.push(id);
+    // console.log({ lists });
+    set({ wishlists: lists });
+  },
+  removeFromWishList: () => {},
   currentListing: undefined,
-  setListings: (listings) => set({ listings }),
-  setIsMapView: () => set({ isMapView: !get().isMapView }),
-  setUserListings: (userListings) => set({ userListings }),
+  setCurrentListing: (currentListing) => set({ currentListing }),
   removeUserListing: (listing) => {
     const listings = get().userListings;
     const index = listings.findIndex((list) => list.id === listing);
@@ -16,13 +20,21 @@ export const createListingSlice = (set, get) => ({
     }
     set({ userListings: listings });
   },
-  setWishLists: (wishlists) => set({ wishlists }),
-  addToWishList: (id) => {
-    const lists = get().wishlists;
-    lists.push(id);
-    // console.log({ lists });
-    set({ wishlists: lists });
+  isMapView: false,
+  listings: [],
+  showSchedulerBar: false,
+  userListings: [],
+  setUserListings: (userListings) => set({ userListings }),
+  setIsMapView: () => {
+    set({ isMapView: !get().isMapView });
   },
-  setWishListsPage: (wishListsPage) => set({ wishListsPage }),
-  setCurrentListing: (currentListing) => set({ currentListing }),
+  setInitialView: () => {
+    set({ isMapView: false });
+  },
+  setListings: (listings) => {
+    set({ listings });
+  },
+  setShowScheduleBar: () => {
+    set({ showScheduleBar: !get().showScheduleBar });
+  },
 });

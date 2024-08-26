@@ -7,8 +7,8 @@ const ListView = () => {
 
   return (
     <div className="grid grid-cols-5 h-[85vh] px-20 gap-10 py-10 justify-start items-start">
-      {listings.map((listing, index) => (
-        <ListingCard key={listing.id} data={listing} />
+      {listings?.map((listing, index) => (
+        <ListingCard key={index} data={listing} />
       ))}
     </div>
   );

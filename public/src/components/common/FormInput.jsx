@@ -3,7 +3,8 @@ import React from "react";
 const FormInput = ({
   name,
   type = "text",
-  value, setValue,
+  value, 
+  setValue,
   placeholder,
   isListing = false
 }) => {

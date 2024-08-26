@@ -1,10 +1,13 @@
 "use client";
+import { getUserTrips } from "../../lib/lisitng";
+import { useAppStore } from "../../store/store";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useAppStore } from "../../store/store";
-import { getUserTrips } from "../../lib/lisitng";
-import Navbar from "../../components/navbar/Navbar";
-import Footer from "../../components/footer/Footer";
+import CompactFooter from "../../components/footer/CompactFooter";
+const Navbar = dynamic(() => import("../../components/navbar/Navbar"), {
+  ssr: false,
+});
 
 export default function Page() {
   const router = useRouter();
@@ -87,7 +90,7 @@ export default function Page() {
           </table>
         </div>
       </div>
-      <Footer />
+      <CompactFooter />
     </div>
   );
 }

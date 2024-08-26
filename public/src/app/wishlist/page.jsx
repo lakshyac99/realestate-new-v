@@ -1,11 +1,11 @@
 "use client";
 import AuthModal from "../../components/auth/AuthModal";
-import Footer from "../../components/footer/Footer";
 import ListingCard from "../../components/listingCard";
 import { getUserWishlists } from "../../lib/lisitng";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useAppStore } from "../../store/store";
+import CompactFooter from "../../components/footer/CompactFooter";
 const Navbar = dynamic(() => import("../../components/navbar/Navbar"), {
   ssr: false,
 });
@@ -31,7 +31,7 @@ export default function Page() {
               <ListingCard
                 data={listing}
                 key={index}
-                isWishList={true}
+                isWishList
                 wishListId={id}
               />
             ))}
@@ -42,7 +42,7 @@ export default function Page() {
           </div>
         )}
       </div>
-      <Footer />
+      <CompactFooter />
     </div>
   );
 }

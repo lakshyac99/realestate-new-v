@@ -1,24 +1,41 @@
 "use client";
-import AirBnbLogoShort from "../../svg/airbnb-logo-short";
-import React, { useState } from "react";
-import Overview from "../../components/process/Overview";
-import ListingPlaceType from "../../components/process/ListingPlaceType";
-import StepOneStarter from "../../components/process/StepOneStarter";
-import PlaceLocation from "../../components/process/PlaceLocation";
-import ListingTypeSelector from "../../components/process/ListingTypeSelector";
-import PlaceDetails from "../../components/process/PlaceDetails";
-import FloorPlan from "../../components/process/FloorPlan";
-import StepTowStarter from "../../components/process/StepTwoStarter";
-import ProcessAmeneties from "../../components/process/ProcessAmeneties";
-import Photos from "../../components/process/Photos";
-import Title from "../../components/process/Title";
 import Description from "../../components/process/Description";
-import StepThreeStarter from "../../components/process/StepThreeStarter";
-import Price from "../../components/process/Price";
+import FloorPlan from "../../components/process/FloorPlan";
 import ListingCreated from "../../components/process/ListingCreated";
+import ListingPlaceType from "../../components/process/ListingPlaceType";
+import ListingTypeSelector from "../../components/process/ListingTypeSelector";
+import Overview from "../../components/process/Overview";
+import Photos from "../../components/process/Photos";
+import PlaceDetails from "../../components/process/PlaceDetails";
+import PlaceLocation from "../../components/process/PlaceLocation";
+import Price from "../../components/process/Price";
+import ProcessAmeneties from "../../components/process/ProcessAmeneties";
+import StepOneStarter from "../../components/process/StepOneStarter";
+import StepTowStarter from "../../components/process/StepTwoStarter";
+import StepThreeStarter from "../../components/process/StepThreeStarter";
+import Title from "../../components/process/Title";
+import { useAppStore } from "../../store/store";
+import AirBnbLogoShort from "../../svg/airbnb-logo-short";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const page = () => {
+function page() {
+  const router = useRouter();
   const [step, setStep] = useState(0);
+
+  const { resetNewListingData } = useAppStore();
+
+  // useEffect(() => {
+  //   resetNewListingData();
+  // }, [resetNewListingData]);
+
+  const handleNext = () => {
+    setStep(step + 1);
+  };
+
+  const handlePrevious = () => {
+    setStep(step - 1);
+  };
 
   const getComponent = () => {
     switch (step) {
@@ -57,18 +74,10 @@ const page = () => {
     }
   };
 
-  const handleNext = () => {
-    setStep(step + 1);
-  };
-
-  const handlePrevious = () => {
-    setStep(step - 1);
-  };
-
   return (
     <div className="grid grid-rows-new-listing h-[100vh]">
       <header className="flex items-center px-20 justify-between">
-        <div className="cursor-pointer">
+        <div className="cursor-pointer" onClick={() => router.push("/")}>
           <AirBnbLogoShort />
         </div>
         {step <= 13 && (
@@ -77,11 +86,11 @@ const page = () => {
           </button>
         )}
       </header>
-      {getComponent()}
+      <div>{getComponent()}</div>
       <footer
-        className={`flex items-center px-20 pb-4 border-t-4 border-t-gray-300 ${
+        className={`flex ${
           step > 0 ? "justify-between" : "justify-end"
-        }`}
+        } items-center px-20 pb-4 border-t-4 border-t-gray-300`}
       >
         {step >= 1 && (
           <button
@@ -109,6 +118,6 @@ const page = () => {
       </footer>
     </div>
   );
-};
+}
 
 export default page;

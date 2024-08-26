@@ -5,6 +5,7 @@ import Pin from "../common/Pin";
 import ListingCard from "../listingCard";
 
 const MapView = () => {
+  
   const { listings } = useAppStore();
 
   const [popupInfo, setPopupInfo] = useState(null);
@@ -12,7 +13,7 @@ const MapView = () => {
   const pins = useMemo(() =>
     listings.map((data, index) => (
       <Marker
-        key={`maker-${listings.id}`}
+        key={`maker-${index}`}
         longitude={data.mapData.longitude}
         latitude={data.mapData.latitude}
         anchor="top"
@@ -41,8 +42,8 @@ const MapView = () => {
         {popupInfo && (
           <Popup
             anchor="top"
-            longitude={popupInfo.mapData.longitude}
-            latitude={popupInfo.mapData.latitude}
+            longitude={Number(popupInfo.mapData.longitude)}
+            latitude={Number(popupInfo.mapData.latitude)}
             onClose={() => setPopupInfo(null)}
           >
             <div>

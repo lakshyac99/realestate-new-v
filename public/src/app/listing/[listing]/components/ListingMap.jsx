@@ -24,12 +24,12 @@ const ListingMap = () => {
           latitude: currentListing.mapData.latitude,
           zoom: 13,
         }}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         scrollZoom={false}
         dragPan={false}
         dragRotate={false}
         doubleClickZoom={false}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
       >
         {pins}
       </Map>

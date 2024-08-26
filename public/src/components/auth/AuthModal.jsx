@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-
 import { IoMdClose } from "react-icons/io";
 import FormInput from "../common/FormInput";
 import { useAppStore } from "../../store/store";
@@ -8,7 +7,6 @@ import { checkUser, signup, login } from "../../lib/auth";
 
 const AuthModal = () => {
   const { setAuthModal, setIsLoggedIn, setUserInfo } = useAppStore();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -65,6 +63,7 @@ const AuthModal = () => {
                   <h3 className="text-xl pb-5">Welcome to AirBnb</h3>
                   {userFound === null && (
                     <FormInput
+                      type="text"
                       name="email"
                       placeholder="Email"
                       value={email}

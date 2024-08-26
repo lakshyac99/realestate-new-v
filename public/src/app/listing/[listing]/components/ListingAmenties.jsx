@@ -2,7 +2,7 @@ import React from "react";
 import { useAppStore } from "../../../../store/store";
 import { AmenetiesType } from "../../../../data/Amenities";
 
-const ListingAmenties = () => {
+export default function ListingAmenties () {
   const { currentListing } = useAppStore();
   function getSvgPathByName(name) {
     for (const amenity of AmenetiesType) {
@@ -33,4 +33,4 @@ const ListingAmenties = () => {
   );
 };
 
-export default ListingAmenties;
+// export default ListingAmenties;

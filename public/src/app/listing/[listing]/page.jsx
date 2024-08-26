@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
+import AuthModal from "../../../components/auth/AuthModal";
 import { useAppStore } from "../../../store/store";
 import { getListing } from "../../../lib/lisitng";
+import CompactFooter from "../../../components/footer/CompactFooter";
 const Navbar = dynamic(() => import("../../../components/navbar/Navbar"), {
   ssr: false,
 });
@@ -14,12 +16,12 @@ import TripScheduler from "./components/TripScheduler";
 import Footer from "../../../components/footer/Footer";
 
 const page = ({ params: { listing } }) => {
-  const { currentListing, setCurrentListing } = useAppStore();
+  const { isAuthModalOpen, currentListing, setCurrentListing } = useAppStore();
 
   useEffect(() => {
     const getData = async () => {
       const data = await getListing(listing);
-      console.log({ data });
+      // console.log({ data });
       setCurrentListing(data);
     };
     if (listing) {
@@ -38,9 +40,9 @@ const page = ({ params: { listing } }) => {
           >
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1">
-                <h2 className="text-5xl">{currentListing.title}</h2>
+                <h2 className="text-5xl">{currentListing?.title}</h2>
                 <span className="text-lg cursor-pointer underline">
-                  {currentListing.locationData.landmark}
+                  {currentListing?.locationData.landmark}
                 </span>
               </div>
               <ListingPhotos />
@@ -64,15 +66,18 @@ const page = ({ params: { listing } }) => {
                       </li>
                     ))}
                   </ul>
-                  <p>{currentListing.description}</p>
-                  <ListingAmenties />
-                  <ListingMap />
                 </div>
+                <p>{currentListing?.description}</p>
+                <ListingAmenties />
+                <ListingMap />
               </div>
             </div>
-            <TripScheduler />
+            <div>
+              <TripScheduler />
+            </div>
           </div>
-          <Footer />
+          <CompactFooter />
+          {isAuthModalOpen && <AuthModal />}
         </div>
       )}
     </div>

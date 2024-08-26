@@ -9,7 +9,7 @@ const ProcessAmeneties = () => {
 
   const removeAmenity = (name) => {
     const index = placeAmeneties.findIndex((amenity) => amenity === name);
-    if (index !== -1) {
+    if (index) {
       const clonedAmenities = [...placeAmeneties];
       clonedAmenities.splice(index, 1);
       setPlaceAmeneties(clonedAmenities);
@@ -41,7 +41,10 @@ const ProcessAmeneties = () => {
                   <button
                     key={name}
                     className={`flex flex-col justify-start font-semibold border border-gray-300 rounded-md p-3 hover:border-gray-950 transition-all duration-300
-                      ${placeAmeneties?.includes(name) && "border-gray-950"}`}
+                      ${
+                        placeAmeneties?.find((amenity) => amenity === name) &&
+                        "border-gray-950"
+                      }`}
                     onClick={() =>
                       placeAmeneties?.includes(name)
                         ? removeAmenity(name)

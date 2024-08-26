@@ -6,6 +6,9 @@ import { useAppStore } from "../../store/store";
 
 const ListingPlaceType = () => {
   const { placeType, setPlaceType } = useAppStore();
+  const handleSelection = (place) => {
+    setPlaceType(place);
+  };
 
   const data = [
     {
@@ -37,11 +40,9 @@ const ListingPlaceType = () => {
           <li
             key={place.title}
             className={`flex border border-gray-300 rounded-md p-7 justify-between hover:border-gray-500 transition-all duration-300 cursor-pointer
-            ${
-              place.title === placeType?.title && "border-gray-950 bg-slate-100"
-            }  
+            ${placeType === place.title && "border-gray-950 bg-slate-100"}  
             `}
-            onClick={() => setPlaceType(place)}
+            onClick={() => handleSelection(place.title)}
           >
             <div>
               <h4 className="font-semibold">{place.title}</h4>

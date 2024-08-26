@@ -4,6 +4,9 @@ import { useAppStore } from "../../store/store";
 
 const ListingTypeSelector = () => {
   const { locationType, setLocationType } = useAppStore();
+  const handleSelection = (type) => {
+    setLocationType(type);
+  };
 
   return (
     <div className="flex justify-center items-center max-h-[80vh] h-[80vh]">
@@ -16,14 +19,12 @@ const ListingTypeSelector = () => {
             <button
               key={type.name}
               className={`flex flex-col font-semibold border border-gray-300 rounded-md p-3 hover:border-gray-950 transition-all duration-300
-              ${
-                type.name === locationType?.name &&
-                "border-gray-950 bg-slate-100"
-              }  
+              ${type.name === locationType && "border-gray-950 bg-slate-100"}  
               `}
-              onClick={() => setLocationType(type)}
+              onClick={() => handleSelection(type.name)}
             >
-              {type.svgPath} <span>{type.name}</span>
+              {type.svgPath}
+              <span>{type.name}</span>
             </button>
           ))}
         </div>

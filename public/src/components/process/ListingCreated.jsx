@@ -22,8 +22,8 @@ const ListingCreated = () => {
 
   useEffect(() => {
     createListingAPI({
-      locationType:locationType.name,
-      placeType:placeType.title,
+      locationType,
+      placeType,
       mapData,
       locationData,
       placeSpace,

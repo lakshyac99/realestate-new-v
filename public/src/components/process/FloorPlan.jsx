@@ -7,8 +7,11 @@ const FloorPlan = () => {
   const handleIncrement = (type) =>
     setPlaceSpace({ ...placeSpace, [type]: placeSpace[type] + 1 });
 
-  const handleDecrement = (type) =>
-    setPlaceSpace({ ...placeSpace, [type]: placeSpace[type] - 1 });
+  const handleDecrement = (type) => {
+    if (placeSpace[type] > 1) {
+      setPlaceSpace({ ...placeSpace, [type]: placeSpace[type] - 1 });
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-full flex-col gap-5">
@@ -32,7 +35,8 @@ const FloorPlan = () => {
               >
                 -
               </button>
-              <button>{placeSpace[place]}</button>
+              <span className="min-w-[20px]">{placeSpace[place]}</span>
+              {/* <button>{placeSpace[place]}</button> */}
               <button
                 className="border border-gray-200 py-[10px] rounded-full px-5 flex items-center justify-center hover:border-gray-500"
                 onClick={() => handleIncrement(place)}

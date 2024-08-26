@@ -22,6 +22,14 @@ const PlaceDetails = () => {
         <div className="flex flex-col gap-2 w-[30%]">
           <FormInput
             isListing
+            name="country"
+            placeholder="Country"
+            setValue={handleChange}
+            type="text"
+            value={locationData?.counrty}
+          />
+          <FormInput
+            isListing
             name="neighborhood"
             placeholder="House, flat, bldg, etc."
             setValue={handleChange}

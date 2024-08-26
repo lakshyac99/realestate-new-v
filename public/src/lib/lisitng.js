@@ -3,19 +3,25 @@ import { createUrl, post } from "./http";
 import axios from "axios";
 
 export const createListingAPI = async (listingData) => {
-  const result = await post(createUrl("/api/listings"), {
-    ...listingData,
-  }).catch(() => null);
-  console.log({ result });
-  if (!result.data) {
+  const result = (
+    await post(createUrl("/api/listings"), {
+      ...listingData,
+    }).catch(() => null)
+  )?.data;
+
+  if (!result) {
     return alert("Could not create listing.");
   }
 
   return result;
 };
 
-export const getAllListingsAPI = async () => {
-  const result = await axios.get(createUrl(`/api/listings`));
+export const getAllListings = async () => {
+  const query = qs.stringify({
+    orderBy: { createdAt: "asc" },
+  });
+
+  const result = await axios.get(createUrl(`/api/listings?${query}`));
 
   if (!result) {
     alert("Could not get all listings.");
@@ -24,16 +30,81 @@ export const getAllListingsAPI = async () => {
   return result.data;
 };
 
+export const getSearchListing = async (searchTerm) => {
+  const query = qs.stringify({
+    where: {
+      OR: [
+        {
+          locationData: {
+            path: ["place"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["region"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["country"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["district"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["landmark"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["locality"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["postcode"],
+            string_contains: searchTerm,
+          },
+        },
+        {
+          locationData: {
+            path: ["neighborhood"],
+            string_contains: searchTerm,
+          },
+        },
+      ],
+    },
+    orderBy: { createdAt: "asc" },
+  });
+  const result = await axios.get(createUrl(`/api/listings?${query}`));
+  if (!result) {
+    console.log("not found");
+  }
+
+  console.log({ result });
+  return result.data;
+};
+
 export const getUserListings = async (userId) => {
   const query = qs.stringify({
-    where: { listingCreatedBy: { id: userId } },
+    where: { listingCreatedBy: userId },
   });
 
   const result = await axios.get(createUrl(`/api/listings?${query}`));
   if (!result) {
-    alert("Could not get all listings.");
-    return [];
+    console.log("not found");
   }
+  console.log({ result });
   return result.data;
 };
 
@@ -51,19 +122,19 @@ export const getUserWishlists = async (userId) => {
       user: { id: userId },
     },
     select: {
-      listng: true,
+      listing: true,
     },
   });
-  const result = await axios
-    .get(createUrl(`/api/wishlists?${query}`))
-    .catch(() => null);
+  const result = (
+    await axios.get(createUrl(`/api/wishlists?${query}`)).catch(() => null)
+  )?.data;
 
   // if (result?.data) {
   //   alert("Failed to get user wishlists.");
   //   return [];
   // }
 
-  return result.data;
+  return result;
 };
 
 export const addToWishlists = async (id, userId) => {
@@ -72,12 +143,14 @@ export const addToWishlists = async (id, userId) => {
     user: { id: userId },
   };
 
-  const result = await post(createUrl("/api/wishlists"), { ...query });
+  const result = await post(createUrl("/api/wishlists"), { ...query }).catch(
+    () => null
+  )?.data;
 
   if (!result.data) {
     return alert("Could not create wishlist");
   }
-  return result.data;
+  return result;
 };
 
 export const removeFromWishListAPI = async (id) => {

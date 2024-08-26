@@ -11,7 +11,7 @@ const PlaceLocation = () => {
     // console.log({result})
     const [longitude, latitude] = result?.geometry?.coordinates;
     const data = {
-      landmark: result?.text,
+      landmark: result.text,
       neighnorhood: "",
       postcode: "",
       locality: "",
@@ -40,7 +40,7 @@ const PlaceLocation = () => {
         Your address is only shared with guests after they've made a
         reservation.
       </p>
-      <div className="h-[40px] w-[700px]">
+      <div className="h-[400px] w-[700px]">
         <Map
           initialViewState={{
             longitude: -79.4512,
