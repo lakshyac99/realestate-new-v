@@ -95,18 +95,48 @@ export const getSearchListing = async (searchTerm) => {
   return result.data;
 };
 
+// export const getUserListings = async (userId) => {
+//   const query = qs.stringify({
+//     where: { listingCreatedBy: userId },
+//   });
+
+//   const result = await axios.get(createUrl(`/api/listings?${query}`));
+//   if (!result) {
+//     console.log("not found");
+//   }
+//   console.log({ result });
+//   return result.data;
+// };
+
+
+
 export const getUserListings = async (userId) => {
+  // Correctly structure the filter for Prisma
   const query = qs.stringify({
-    where: { listingCreatedBy: userId },
+    where: {
+      listingCreatedBy: {
+        id: userId, // Use the userId to filter by the related user's ID
+      },
+    },
   });
 
-  const result = await axios.get(createUrl(`/api/listings?${query}`));
-  if (!result) {
-    console.log("not found");
+  try {
+    const result = await axios.get(createUrl(`/api/listings?${query}`));
+
+    if (!result || !result.data) {
+      console.log("No listings found for the user.");
+      return [];
+    }
+
+    console.log({ result });
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching user listings:", error);
+    return [];
   }
-  console.log({ result });
-  return result.data;
 };
+
+
 
 export const deleteListingAPI = async (id) => {
   const result = await axios.delete(createUrl(`/api/listings/${id}`));
@@ -137,20 +167,41 @@ export const getUserWishlists = async (userId) => {
   return result;
 };
 
-export const addToWishlists = async (id, userId) => {
+// export const addToWishList = async (id, userId) => {
+//   const query = {
+//     listing: { id },
+//     user: { id: userId },
+//   };
+
+//   const result = await post(createUrl("/api/wishlists"), { ...query }).catch(
+//     () => null
+//   )?.data;
+
+//   if (!result.data) {
+//     return alert("Could not create wishlist");
+//   }
+//   return result;
+// };
+
+export const addToWishList = async (id, userId) => {
   const query = {
     listing: { id },
     user: { id: userId },
   };
 
-  const result = await post(createUrl("/api/wishlists"), { ...query }).catch(
-    () => null
-  )?.data;
+  try {
+    const response = await post(createUrl("/api/wishlists"), { ...query });
 
-  if (!result.data) {
-    return alert("Could not create wishlist");
+    if (!response || !response.data) {
+      return alert("Could not create wishlist");
+    }
+
+    return response.data; // Assuming data is the correct return value
+  } catch (error) {
+    console.error("Error creating wishlist:", error);
+    alert("Could not create wishlist");
+    return null;
   }
-  return result;
 };
 
 export const removeFromWishListAPI = async (id) => {

@@ -1,5 +1,5 @@
 import {
-  addToWishlists,
+  addToWishList,
   deleteListingAPI,
   removeFromWishListAPI,
 } from "../lib/lisitng";
@@ -18,7 +18,7 @@ const ListingCard = ({
   const {
     removeUserListing,
     userInfo,
-    addToWishList,
+    addToWishListSlice,
     wishlists,
     wishListsPage,
     setWishListsPage,
@@ -33,8 +33,8 @@ const ListingCard = ({
   };
 
   const addWishList = async () => {
-    await addToWishlists(data.id, userInfo?.id);
-    addToWishList(data.id);
+    await addToWishList(data.id, userInfo?.id);
+    addToWishListSlice(data.id);
   };
 
   const removeWishlist = async () => {

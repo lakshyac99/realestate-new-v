@@ -3,7 +3,7 @@ export const createListingSlice = (set, get) => ({
   setWishLists: (wishlists) => set({ wishlists }),
   wishListsPage: [],
   setWishListsPage: (wishListsPage) => set({ wishListsPage }),
-  addToWishList: (id) => {
+  addToWishListSlice: (id) => {
     const lists = get().wishlists;
     lists.push(id);
     // console.log({ lists });
