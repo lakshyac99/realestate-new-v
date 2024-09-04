@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/koolkishan/nextjs-airbnb-clone#readme",
   "dependencies": {
+    "@nest-middlewares/morgan": "^10.0.0",
     "qs": "^6.11.2"
   }
 }

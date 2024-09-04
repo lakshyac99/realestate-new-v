@@ -14,20 +14,25 @@ export function IsJSONValue(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(value: any, args: ValidationArguments) {
+          if (value === undefined || value === null) {
+            return false;
+          }
           if (typeof value === "string") {
             return isJSONValidator(value);
           }
-
-          return isJSONValidator(JSON.stringify(value));
+          try {
+            return isJSONValidator(JSON.stringify(value));
+          } catch (error) {
+            return false;
+          }
         },
         defaultMessage(args: ValidationArguments): string {
-          return `${args.property} must be a valid json`;
+          return `${args.property} must be a valid json, Received: ${args.value}`;
         },
       },
     });
   };
 }
-
 
 // import {
 //   ValidationArguments,

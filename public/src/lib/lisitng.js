@@ -30,6 +30,14 @@ export const getAllListings = async () => {
   return result.data;
 };
 
+export const getListing = async (listingId) => {
+  const result = await axios.get(createUrl(`/api/listings/${listingId}`));
+  if (!result) {
+    alert("no listing with given id");
+  }
+  return result.data;
+};
+
 export const getSearchListing = async (searchTerm) => {
   const query = qs.stringify({
     where: {
@@ -212,13 +220,22 @@ export const removeFromWishListAPI = async (id) => {
   return result;
 };
 
-export const getListing = async (listingId) => {
-  const result = await axios.get(createUrl(`/api/listings/${listingId}`));
-  if (!result) {
-    alert("no listing with given id");
-  }
-  return result.data;
-};
+// export const addTrip = async (data) => {
+//   const query = {
+//     listing: { id: data.listingId },
+//     user: { id: data.userId },
+//     tripData: data.tripData ? (typeof data.tripData === 'string' ? data.tripData : JSON.stringify(data.tripData)) : '{}',
+//   };
+
+//   try {
+//     const result = await axios.post(createUrl("/api/trips"), {...query});
+//     return result;
+//   } catch (error) {
+//     alert("Failed to add trip");
+//     console.error("Error adding trip:", error.message);
+//     return null;
+//   }
+// };
 
 export const addTrip = async (data) => {
   const query = {
@@ -226,15 +243,70 @@ export const addTrip = async (data) => {
       id: data.listingId,
     },
     user: { id: data.userId },
-    triptData: data.tripData,
+    tripData: data.tripData, // Ensure tripData is a JSON string
   };
-  const result = await axios.post(createUrl("/api/trips"), { ...query });
-  if (!result) {
-    alert("failed");
-  } else {
-    return result;
+
+  console.log('Query being sent:', query); // Add this line to debug
+
+  try {
+    const result = await axios.post(createUrl("/api/trips"), query, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return result.data;
+  } catch (error) {
+    console.error("Error adding trip:", error.response?.data || error.message);
+    alert("Failed to add trip: " + (error.response?.data?.message || error.message));
+    return null;
   }
 };
+
+
+
+// export const addTrip = async (data) => {
+//   const query = {
+//     listing: {
+//       id: data.listingId,
+//     },
+//     user: { id: data.userId },
+//     triptData: data.tripData,
+//   };
+//   const result = await axios.post(createUrl("/api/trips"), { ...query });
+//   if (!result) {
+//     alert("failed");
+//   } else {
+//     return result;
+//   }
+// };
+
+
+// export const addTrip = async (data) => {
+//   const query = {
+//     listing: {
+//       id: data.listingId,
+//     },
+//     user: { id: data.userId },
+//     tripData: typeof data.tripData === 'string' ? data.tripData : JSON.stringify(data.tripData),
+//   };
+
+//   try {
+//     const result = await axios.post(createUrl("/api/trips"), query, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return result;
+//   } catch (error) {
+//     alert("Failed to add trip");
+//     console.error("Error adding trip:", error.message);
+//     return null;
+//   }
+// };
+
+
+
+
 
 export const getUserTrips = async (userId) => {
   const query = qs.stringify({

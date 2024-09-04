@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useAppStore } from "../../../../store/store";
 import { BsFillFlagFill } from "react-icons/bs";
-import { addTrip } from "../../../../lib/lisitng";
+import {addTrip} from "../../../../lib/lisitng"
 import { addDays } from "date-fns";
 import Daimond from "../../../../svg/daimond";
 
