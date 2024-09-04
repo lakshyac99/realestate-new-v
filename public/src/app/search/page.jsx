@@ -7,23 +7,28 @@ const Navbar = dynamic(() => import("../../components/navbar/Navbar"), {
 
 import React, { useEffect } from "react";
 import SearchMap from "./components/SearchMap";
-import { getSearchListing } from "../../lib/lisitng";
+import { getAllListings, getSearchListing } from "../../lib/lisitng";
 import ListingCard from "../../components/listingCard";
 import dynamic from "next/dynamic";
 import { useAppStore } from "../../store/store";
+import ListView from "../../components/views/ListView";
 
 export default function Page() {
-  const { isAuthModalOpen, searchLocation, setSearchListings, searchListings } =
-    useAppStore;
+  const {
+    isAuthModalOpen,
+    setListings,
+    // searchLocation,
+    setSearchListings,
+    // searchListings,
+    listings,
+  } = useAppStore();
   useEffect(() => {
     const getData = async () => {
-      const data = await getSearchListing(searchLocation.address);
-      setSearchListings(data);
+      const data = await getAllListings();
+      setListings(data);
     };
-    if (searchLocation) {
-      getData();
-    }
-  }, [searchLocation, setSearchListings]);
+    getData();
+  }, [setSearchListings]);
   return (
     <div>
       <Navbar />
@@ -33,8 +38,11 @@ export default function Page() {
       >
         <div className=" h-[82.5vh] overflow-auto no-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 px-4 md:px-20 gap-16 py-10 h-[75vh] overflow-auto no-scrollbar">
-            {searchListings?.map((listing, index) => (
+            {/* {searchListings?.map((listing, index) => (
               <ListingCard data={listing} key={index} />
+            ))} */}
+            {listings?.map((listing, index) => (
+              <ListingCard key={index} data={listing} />
             ))}
           </div>
         </div>
@@ -42,6 +50,12 @@ export default function Page() {
           <SearchMap />
         </div>
       </div>
+      {/* <div className="grid grid-cols-5 h-[85vh] px-20 gap-10 py-10 justify-start items-start">
+        {listings?.map((listing, index) => (
+          <ListingCard key={index} data={listing} />
+        ))}
+      </div> */}
+
       <CompactFooter />
       {isAuthModalOpen && <AuthModal />}
     </div>
